@@ -49,7 +49,7 @@ func DecodeJson(url string, target interface{}) error {
 
 
 }
-//Goroutine to fetch json
+//Function to fetch json
 func getArticle(url string) []Article{
 	
 	var resp HTTPResponse
@@ -64,7 +64,7 @@ func getArticle(url string) []Article{
 	}
 }
 
-
+//Used for debugging
 func PrettyEncode(data interface{}, out io.Writer) error {
     enc := json.NewEncoder(out)
     enc.SetIndent("", "    ")
@@ -74,7 +74,7 @@ func PrettyEncode(data interface{}, out io.Writer) error {
     return nil
 }
 
-
+//Function does most of the logic for this assignment. Was hoping to finish with a working pattern of five and fives.
 func running (ArticleURL string, ContentMarketingURL string) []byte{
 	var article[] Article
 	var contentmarketing[] Article
@@ -85,7 +85,7 @@ func running (ArticleURL string, ContentMarketingURL string) []byte{
  	article = getArticle(ArticleURL)
 	contentmarketing = getArticle(ContentMarketingURL)
 
-	//Add adds to contentmarketing.
+	//Add adds to contentmarketing. Not optimal
 	for i := len(contentmarketing); i < len(article); i++ {
 		contentmarketing= append(contentmarketing, add)
 	}
@@ -93,7 +93,7 @@ func running (ArticleURL string, ContentMarketingURL string) []byte{
 	wg := &sync.WaitGroup{}
 	mut := &sync.Mutex{}
 	wg.Add(2)
-	//Was hoping to find a way to merge the pattern here
+	//Was hoping to find a way to merge the pattern here.
 	go func (wg *sync.WaitGroup, mut *sync.Mutex) {
 		for i := 0; i < len(article); i++ {
 			mut.Lock()
@@ -123,7 +123,3 @@ func running (ArticleURL string, ContentMarketingURL string) []byte{
 	
 	return j
 }
-
-// func merge_arrays(article[] Article, contentmarketing[] Article) {
-
-// }
